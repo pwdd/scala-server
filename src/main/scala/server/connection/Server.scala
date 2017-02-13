@@ -2,12 +2,12 @@ package server.connection
 
 import java.net.ServerSocket
 
-case class Server() {
-  private var serverSocket: ServerSocket = null
+object Server {
+  private var serverSocket: ServerSocket = _
 
   def listenAt(portNumber: Int): Unit = {
     serverSocket = new ServerSocket(portNumber)
   }
 
-  def stop(): Unit = serverSocket.close
+  def stop(): Unit = serverSocket.close()
 }
