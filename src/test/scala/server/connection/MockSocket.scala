@@ -8,14 +8,14 @@ import scala.collection.JavaConverters._
 
 object MockSocket extends Socket {
   private var requestString: String = _
-  private var storedOutput: String = _
-  private var byteList = new util.ArrayList[Byte]()
+  var storedOutput: String = _
+  private val byteList = new util.ArrayList[Byte]()
 
   def setRequestString(request: String): Unit = requestString = request
 
   def getRequestString: String = requestString
 
-  def setStoredOutput(): Unit = byteArrayToString(byteListToByteArray(byteList))
+  def setStoredOutput(): Unit = storedOutput = byteArrayToString(byteListToByteArray(byteList))
 
   override def getInputStream: InputStream = new ByteArrayInputStream(requestString.getBytes)
 

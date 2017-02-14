@@ -15,6 +15,14 @@ trait ConnectionManagerSuite extends FunSuite {
     assert(expected == requested)
   }
 
+  test("sendResponse") {
+    info("sends response through socket")
+    val connectionManager: ConnectionManager = ConnectionManager(MockSocket)
+    connectionManager.sendResponse("foo".getBytes)
+    MockSocket.setStoredOutput()
+    assert("foo" ==  MockSocket.storedOutput)
+  }
+
   private def bufToString(toRead: BufferedReader): String = {
     Stream.continually(toRead.readLine()).takeWhile(_ != null).mkString
   }
