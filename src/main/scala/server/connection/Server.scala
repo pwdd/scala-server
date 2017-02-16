@@ -2,7 +2,7 @@ package server.connection
 
 import java.net.ServerSocket
 
-object Server {
+object Server extends Runnable {
   private val portNumber = 8080
   private var serverSocket: ServerSocket = _
 
@@ -12,10 +12,10 @@ object Server {
 
   def stop(): Unit = serverSocket.close()
 
-  def run(): Unit = {
+  override def run(): Unit = {
     listenAt(portNumber)
     while (true) {
-      new Thread(ConnectionManager(serverSocket.accept())).start()
+      ConnectionManager(serverSocket.accept()).run()
     }
   }
 }
