@@ -1,7 +1,7 @@
 package server.connection
 
 import java.net.Socket
-import java.io.IOException
+import java.io.{BufferedReader, IOException, InputStreamReader, PrintWriter}
 
 import org.scalatest.FunSuite
 
@@ -22,3 +22,4 @@ trait ServerSuite extends FunSuite {
     }
   }
 }
+
