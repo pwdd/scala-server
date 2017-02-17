@@ -28,11 +28,10 @@ trait ServerSuite extends FunSuite {
     val out = new PrintWriter(client.getOutputStream)
 
     out.print("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n")
-    out.flush()
     val peek = in.readLine()
+    out.flush()
     client.setSoTimeout(500)
     out.close()
-    client.close()
     assert("HTTP/1.1 200 OK" === peek)
   }
 }

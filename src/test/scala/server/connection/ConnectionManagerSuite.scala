@@ -5,8 +5,7 @@ import java.io.BufferedReader
 import org.scalatest.FunSuite
 
 trait ConnectionManagerSuite extends FunSuite {
-  test("getRequest") {
-    info("gets request from a socket")
+  test("getRequest: gets request from a socket") {
     val connectionManager: ConnectionManager = ConnectionManager(MockSocket)
     val request = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n"
     val expected = request.replace("\r\n", "")
@@ -15,8 +14,7 @@ trait ConnectionManagerSuite extends FunSuite {
     assert(expected == requested)
   }
 
-  test("sendResponse") {
-    info("sends response through socket")
+  test("sendResponse: sends response through socket") {
     val connectionManager: ConnectionManager = ConnectionManager(MockSocket)
     connectionManager.sendResponse("foo".getBytes)
     MockSocket.setStoredOutput()
