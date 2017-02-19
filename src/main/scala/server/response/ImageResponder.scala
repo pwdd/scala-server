@@ -13,7 +13,7 @@ object ImageResponder {
     "Content-type: image/jpeg" + CRLF +
     CRLF + CRLF
 
-  def body(image: Path): Array[Byte] = null
+  def body(image: Path): Array[Byte] = Files.readAllBytes(image)
 
   def date: String = {
     val date = ZonedDateTime.now(ZoneOffset.UTC)
