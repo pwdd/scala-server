@@ -10,7 +10,7 @@ case class Server() extends Runnable {
 
   def stop(): Unit = serverSocket.close()
 
-  override def run(): Unit = {
+  def run(): Unit = {
     listen()
     while (true) {
       new Thread(ConnectionManager(serverSocket.accept())).start()
