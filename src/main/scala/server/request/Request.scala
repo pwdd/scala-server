@@ -3,13 +3,22 @@ package server.request
 import java.io.BufferedReader
 
 class Request(in: BufferedReader) {
+  lazy val requestMap: Map[String, String] = createMap()
 
-  def body: String = map("Body")
-  def uri: String = map("URI")
-  def method: String = map("Method")
-  def protocol: String = map("Protocol")
+  def body: String = getValueFor("Body")
+  def uri: String = getValueFor("URI")
+  def method: String = getValueFor("Method").toUpperCase
+  def protocol: String = getValueFor("Protocol").toUpperCase
 
-  def map: Map[String, String] = {
+  private def getValueFor(key: String) = {
+    val value: Option[String] = requestMap.get(key)
+    value match {
+      case Some(content) => content
+      case None => ""
+    }
+  }
+
+  def createMap(): Map[String, String] = {
     def parseFirstLine(firstLine: String): Map[String, String] = {
       val firstLineArray = firstLine.split("\\s")
       Map(

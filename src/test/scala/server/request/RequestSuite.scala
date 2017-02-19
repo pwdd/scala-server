@@ -5,23 +5,24 @@ import java.io.{BufferedReader, ByteArrayInputStream, InputStreamReader}
 import org.scalatest.FunSuite
 
 class RequestSuite extends FunSuite {
-  test("requestMap") {
-    info("is a map with request data")
-    val requestString =
-      "GET / HTTP/1.1\r\n" +
-        "Host: localhost\r\n" +
-        "Accept: text/html\r\n" +
-        "Keep-Alive: 300\r\n" +
-        "ConnectionHandler: keep-alive\r\n" +
-        "\r\n" +
-        "Body: foo"
+  private val CRLF = "\r\n"
 
-    val bufferedRequest = new BufferedReader(
-      new InputStreamReader(
-        new ByteArrayInputStream(requestString.getBytes)))
+  val requestString =
+    "GET / HTTP/1.1" + CRLF  +
+      "Host: localhost" + CRLF  +
+      "Accept: text/html" + CRLF  +
+      "Keep-Alive: 300" + CRLF  +
+      "ConnectionHandler: keep-alive" + CRLF  +
+      "" + CRLF  +
+      "Body: foo"
 
-    val request = new Request(bufferedRequest)
+  val bufferedRequest = new BufferedReader(
+    new InputStreamReader(
+      new ByteArrayInputStream(requestString.getBytes)))
 
+  val request = new Request(bufferedRequest)
+
+  test("requestMap: is a map with request data") {
     val expected = Map(
       "Method" -> "GET",
       "URI" -> "/",
@@ -33,8 +34,37 @@ class RequestSuite extends FunSuite {
       "Body" -> "foo"
     )
 
-    val result = request.map
+    val result = request.requestMap
 
     assert(expected === result)
   }
+
+  test("body: holds the body of a request if it exists") {
+    assert(request.body === "foo")
+  }
+
+  test("body: is an empty string if request does not holds a body") {
+    val withoutBody = "GET / HTTP/1.1" + CRLF + "Host: localhost" + CRLF + CRLF
+
+    val bufferedRequest = new BufferedReader(
+      new InputStreamReader(
+        new ByteArrayInputStream(withoutBody.getBytes)))
+
+    val requestWithoutBody = new Request(bufferedRequest)
+
+    assert(requestWithoutBody.body === "")
+  }
+
+  test("uri: holds the value of requested uri") {
+    assert(request.uri === "/")
+  }
+
+  test("method: holds the value of requested method") {
+    assert(request.method === "GET")
+  }
+
+  test("protocol: holds the value of requested protocol") {
+    assert(request.protocol === "HTTP/1.1")
+  }
 }
+
