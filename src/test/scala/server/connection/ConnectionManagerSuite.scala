@@ -10,7 +10,7 @@ trait ConnectionManagerSuite extends FunSuite {
     val request = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n"
     val expected = request.replace("\r\n", "")
     MockSocket.setRequestString(request)
-    val requested = bufToString(connectionManager.getRequest)
+    val requested = bufToString(connectionManager.bufferedRequest)
     assert(expected == requested)
   }
 

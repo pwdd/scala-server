@@ -2,7 +2,7 @@ package server.request
 
 import java.io.BufferedReader
 
-class Request(in: BufferedReader) {
+case class Request(in: BufferedReader) {
   lazy val requestMap: Map[String, String] = createMap()
 
   def body: String = getValueFor("Body")
