@@ -18,6 +18,6 @@ trait Responder {
     dateFormat.format(date)
   }
 
-  def size(image: Path): Int = Files.size(image).toInt
+  def size(uri: Path): Int = Files.size(uri).toInt
 }
 
