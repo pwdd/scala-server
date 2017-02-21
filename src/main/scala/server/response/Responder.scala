@@ -7,8 +7,10 @@ import java.time.{ZoneOffset, ZonedDateTime}
 trait Responder {
   val CRLF: String = "\r\n"
 
-  def header(image: Path): String
-  def body(image: Path): Array[Byte]
+  def header(uri: Path): Array[Byte]
+  def body(uri: Path): Array[Byte]
+
+  def response(uri: Path): Array[Byte] = header(uri) ++ body(uri)
 
   def date: String = {
     val date = ZonedDateTime.now(ZoneOffset.UTC)

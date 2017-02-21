@@ -7,25 +7,26 @@ import org.scalatest.FunSuite
 
 class ImageResponderSuite extends FunSuite {
   private val image: Path = Paths.get(System.getProperty("user.dir"), "src/test/scala/mocks/foo.png")
+  private val header: String = new String(ImageResponder.header(image))
 
   test("header: holds protocol version and status code") {
-    assert(ImageResponder.header(image) contains "HTTP/1.1 200 OK")
+    assert(header contains "HTTP/1.1 200 OK")
   }
 
   test("header: has date information") {
-    assert(ImageResponder.header(image) contains "Date:")
+    assert(header contains "Date:")
   }
 
   test("header: has double CRLF before body") {
-    assert(ImageResponder.header(image) contains "\r\n\r\n")
+    assert(header contains "\r\n\r\n")
   }
 
   test("header: has Content-Length information") {
-    assert(ImageResponder.header(image) contains "Content-Length")
+    assert(header contains "Content-Length")
   }
 
   test("header: has Content-type information") {
-    assert(ImageResponder.header(image) contains "Content-type")
+    assert(header contains "Content-type")
   }
 
   test("body: has the same content as image file") {
