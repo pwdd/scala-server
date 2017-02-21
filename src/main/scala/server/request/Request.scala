@@ -3,7 +3,7 @@ package server.request
 import java.io.BufferedReader
 
 case class Request(in: BufferedReader) {
-  lazy val requestMap: Map[String, String] = createMap()
+  val requestMap: Map[String, String] = createMap()
 
   def body: String = getValueFor("Body")
   def uri: String = getValueFor("URI")
@@ -45,6 +45,9 @@ case class Request(in: BufferedReader) {
   }
 
   private def bufToString(in: BufferedReader): String = {
-    Stream.continually(in.readLine()).takeWhile(_ != null).mkString("\r\n")
+
+    def exists(string: String) = string != null && string.nonEmpty
+
+    Stream.continually(in.readLine()).takeWhile(str => exists(str)).mkString("\r\n")
   }
 }
