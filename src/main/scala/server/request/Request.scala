@@ -3,11 +3,15 @@ package server.request
 import java.io.BufferedReader
 
 case class Request(in: BufferedReader) {
+
   val requestMap: Map[String, String] = createMap()
 
   def body: String = getValueFor("Body")
+
   def uri: String = getValueFor("URI")
+
   def method: String = getValueFor("Method").toUpperCase
+
   def protocol: String = getValueFor("Protocol").toUpperCase
 
   private def getValueFor(key: String) = {
@@ -19,6 +23,7 @@ case class Request(in: BufferedReader) {
   }
 
   def createMap(): Map[String, String] = {
+
     def parseFirstLine(firstLine: String): Map[String, String] = {
       val firstLineArray = firstLine.split("\\s")
       Map(
@@ -34,7 +39,7 @@ case class Request(in: BufferedReader) {
 
     val firstLineMap = parseFirstLine(array(0))
 
-    val rest = array.slice(1, array.length).filter(! _.isEmpty)
+    val rest = array.slice(1, array.length).filter(_.nonEmpty)
 
     for (line <- rest) {
       val splitLine = line.split(" ")
