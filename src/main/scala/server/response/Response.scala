@@ -13,7 +13,7 @@ object Response {
   }
 
   def getHandler(uri: String, routes: List[Handler]): Handler = {
-    val handlerOption: Option[Handler] = routes.find { handler => handler.uri.toLowerCase == uri }
+    val handlerOption: Option[Handler] = routes.find { handler => compareURI(uri, handler.uri.toLowerCase) }
     handlerOption match {
       case Some(value) => value
       case None => ResourceNotFound()
