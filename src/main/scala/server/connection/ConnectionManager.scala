@@ -4,8 +4,11 @@ import java.io.{BufferedReader, InputStreamReader}
 import java.net.Socket
 
 import server.request.Request
+import server.routes.Settings
+import server.response.Response
 
 case class ConnectionManager(socket: Socket) extends Runnable {
+
   def bufferedRequest: BufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream))
 
   def sendResponse(response: Array[Byte]): Unit = {
@@ -15,9 +18,10 @@ case class ConnectionManager(socket: Socket) extends Runnable {
   }
 
   override def run(): Unit = {
+    val routes = Settings.routes
     val request = Request(bufferedRequest)
-    sendResponse("HTTP/1.1 200 OK".getBytes)
+    val response = Response.handle(Settings.rootDirectory, request, routes)
+    sendResponse(response)
     socket.close()
   }
 }
-

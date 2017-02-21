@@ -27,9 +27,9 @@ trait ServerSuite extends FunSuite {
     val in = new BufferedReader( new InputStreamReader( client.getInputStream))
     val out = new PrintWriter(client.getOutputStream)
 
-    out.print("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n")
-    val peek = in.readLine()
+    out.print("GET /owl.jpg HTTP/1.1\r\nHost: localhost\r\n\r\n")
     out.flush()
+    val peek = in.readLine()
     client.setSoTimeout(500)
     out.close()
     assert("HTTP/1.1 200 OK" === peek)
