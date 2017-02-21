@@ -1,6 +1,6 @@
 package server.routes
 
-import server.response.{NotFound, Responder}
+import server.response.{NotFoundResponder, Responder}
 
 trait Handler {
   val uri: String
@@ -9,4 +9,4 @@ trait Handler {
 
 case class GET(uri: String, responder: Responder) extends Handler
 case class POST(uri: String, responder: Responder) extends Handler
-case class ResourceNotFound(uri:String = "", responder: Responder = NotFound) extends Handler
+case class ResourceNotFound(uri:String = "", responder: Responder = NotFoundResponder) extends Handler
