@@ -20,6 +20,11 @@ object Response {
     }
   }
 
+  private def compareURI(requestedURI: String, handlerURI: String) = {
+    val re = handlerURI + "/?"
+    requestedURI.matches(re)
+  }
+
   private def getResponse(rootDirectory: String, uri: String, handler: Handler): Array[Byte] = {
     handler.responder.response(getFilePath(rootDirectory, uri))
   }
