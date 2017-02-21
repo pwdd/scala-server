@@ -34,7 +34,7 @@ class ResponseSuite extends FunSuite {
 
   test("handle: returns response with 404 if resource is not found") {
     val result = new String(Response.handle(rootDirectory, invalidRequest, routes))
-    assert(result contains "HTTP/1.1 400 Not Found\r\n\r\n")
+    assert(result contains "HTTP/1.1 400 Not Found")
   }
 
   test("handle: returns response with 200 if resource is found") {
