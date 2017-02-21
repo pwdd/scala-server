@@ -12,7 +12,6 @@ case class Server() extends Runnable {
     listening = true
   }
 
-
   def stop(): Unit = {
     serverSocket.close()
     listening = false
