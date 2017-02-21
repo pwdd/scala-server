@@ -1,6 +1,7 @@
 package server.routes
 
 trait SetUp {
-  val routes: List[Handler]
+  type Routes = List[Handler]
+  val routes: Routes
   val rootDirectory: String
 }

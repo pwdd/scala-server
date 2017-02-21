@@ -5,7 +5,8 @@ import server.response.ImageResponder
 object Settings extends SetUp {
   val rootDirectory: String = "/public"
 
-  val routes: List[Handler] = Routes(
-    GET("/owl.jpg", ImageResponder)
+  val routes: Routes = Routes(
+    GET("/owl.jpg", ImageResponder),
+    GET("/world.jpg", ImageResponder)
   )
 }
