@@ -19,3 +19,4 @@ out
 *.sc
 requests.sh
 public/world.jpg
+scalastyle-config.xml
