@@ -17,5 +17,5 @@ project/plugins/project/
 out
 .DS_Store
 *.sc
-request.sh
+requests.sh
 public/world.jpg
