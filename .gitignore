@@ -17,3 +17,4 @@ project/plugins/project/
 out
 .DS_Store
 *.sc
+request.sh
