@@ -7,6 +7,7 @@ object Settings extends SetUp {
 
   val routes: Routes = Routes(
     GET("/owl.jpg", ImageResponder),
+    // world.jpg image is 113MB, bigger than Github limit
     GET("/world.jpg", ImageResponder),
     GET("/hello", HelloWorldResponder)
   )
