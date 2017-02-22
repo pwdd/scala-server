@@ -21,5 +21,6 @@ case class ConnectionManager(socket: Socket) extends Runnable {
     val request = Request(bufferedRequest)
     val response = Response.handle(Settings.rootDirectory, request, Settings.routes)
     sendResponse(response)
+    socket.close()
   }
 }
