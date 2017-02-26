@@ -2,6 +2,7 @@ package server.response
 
 import java.io.InputStream
 import java.nio.file.{Path, Paths}
+import java.util.regex.{Matcher, Pattern}
 
 import server.request.Request
 import server.routes._
@@ -22,8 +23,8 @@ object Response {
   }
 
   private def compareURI(requestedURI: String, handlerURI: String) = {
-    val re = handlerURI + "/?"
-    requestedURI.matches(re)
+    val pattern = Pattern.compile(handlerURI + "/?")
+    pattern.matcher(requestedURI).find
   }
 
   private def getResponse(rootDirectory: String, uri: String, handler: Handler): InputStream = {
