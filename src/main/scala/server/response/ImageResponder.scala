@@ -13,5 +13,7 @@ object ImageResponder extends Responder {
     CRLF).getBytes)
 
   def body(image: Path): InputStream = new FileInputStream(image.toString)
+
+  def size(uri: Path): Int = Files.size(uri).toInt
 }
 

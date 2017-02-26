@@ -18,7 +18,5 @@ trait Responder {
     val dateFormat = DateTimeFormatter.ofPattern("EE, dd MMM yyyy HH:mm:ss Z")
     dateFormat.format(date)
   }
-
-  def size(uri: Path): Int = Files.size(uri).toInt
 }
 
