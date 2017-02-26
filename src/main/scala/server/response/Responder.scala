@@ -1,5 +1,6 @@
 package server.response
 
+import java.io.{InputStream, SequenceInputStream}
 import java.nio.file.{Files, Path}
 import java.time.format.DateTimeFormatter
 import java.time.{ZoneOffset, ZonedDateTime}
@@ -7,10 +8,10 @@ import java.time.{ZoneOffset, ZonedDateTime}
 trait Responder {
   val CRLF: String = "\r\n"
 
-  def header(uri: Path): Array[Byte]
-  def body(uri: Path): Array[Byte]
+  def header(uri: Path): InputStream
+  def body(uri: Path): InputStream
 
-  def response(uri: Path): Array[Byte] = header(uri) ++ body(uri)
+  def response(uri: Path): InputStream = new SequenceInputStream(header(uri), body(uri))
 
   def date: String = {
     val date = ZonedDateTime.now(ZoneOffset.UTC)

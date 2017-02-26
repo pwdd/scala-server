@@ -1,12 +1,13 @@
 package server.response
 
+import java.io.InputStream
 import java.nio.file.{Path, Paths}
 
 import server.request.Request
 import server.routes._
 
 object Response {
-  def handle(rootDirectory: String, request: Request, routes: List[Handler]): Array[Byte] = {
+  def handle(rootDirectory: String, request: Request, routes: List[Handler]): InputStream = {
     val uri = request.uri.toLowerCase
     val handler = getHandler(uri, routes)
     getResponse(rootDirectory, uri, handler)
@@ -25,7 +26,7 @@ object Response {
     requestedURI.matches(re)
   }
 
-  private def getResponse(rootDirectory: String, uri: String, handler: Handler): Array[Byte] = {
+  private def getResponse(rootDirectory: String, uri: String, handler: Handler): InputStream = {
     handler.responder.response(getFilePath(rootDirectory, uri))
   }
 

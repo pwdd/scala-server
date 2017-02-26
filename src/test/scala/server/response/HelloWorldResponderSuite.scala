@@ -4,9 +4,11 @@ import org.scalatest.FunSuite
 
 import java.nio.file.Paths
 
+import server.Helpers
+
 class HelloWorldResponderSuite extends FunSuite {
   private val uri = Paths.get("")
-  private val header = new String(HelloWorldResponder.header(uri))
+  private val header = Helpers.inputStreamToString(HelloWorldResponder.header(uri))
 
   test("header: has status code 200 OK") {
     assert(header contains "200 OK" )
@@ -21,6 +23,6 @@ class HelloWorldResponderSuite extends FunSuite {
   }
 
   test("body: has 'hello, world' string") {
-    assert(HelloWorldResponder.body(uri) === "Hello, world!".getBytes)
+    assert(Helpers.inputStreamToString(HelloWorldResponder.body(uri)) === "Hello, world!")
   }
 }

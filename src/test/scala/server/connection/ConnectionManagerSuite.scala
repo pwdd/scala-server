@@ -1,6 +1,6 @@
 package server.connection
 
-import java.io.BufferedReader
+import java.io.{BufferedReader, ByteArrayInputStream, InputStream}
 
 import org.scalatest.FunSuite
 
@@ -15,7 +15,7 @@ trait ConnectionManagerSuite extends FunSuite {
 
   test("sendResponse: sends response through socket") {
     val connectionManager: ConnectionManager = ConnectionManager(MockSocket)
-    connectionManager.sendResponse("foo".getBytes)
+    connectionManager.sendResponse(new ByteArrayInputStream("foo".getBytes))
     MockSocket.setStoredOutput()
     assert("foo" ==  MockSocket.storedOutput)
   }

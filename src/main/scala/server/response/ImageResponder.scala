@@ -1,15 +1,17 @@
 package server.response
 
+import java.io.{ByteArrayInputStream, FileInputStream, InputStream}
 import java.nio.file.{Files, Path}
 
 object ImageResponder extends Responder {
 
-  def header(image: Path): Array[Byte] = ("HTTP/1.1 200 OK" + CRLF +
+  def header(image: Path): InputStream = new ByteArrayInputStream(
+    ("HTTP/1.1 200 OK" + CRLF +
     "Date: " + date + CRLF +
     "Content-Length: " + size(image) + CRLF +
     "Content-type: image/jpeg" + CRLF +
-    CRLF).getBytes
+    CRLF).getBytes)
 
-  def body(image: Path): Array[Byte] = Files.readAllBytes(image)
+  def body(image: Path): InputStream = new FileInputStream(image.toString)
 }
 

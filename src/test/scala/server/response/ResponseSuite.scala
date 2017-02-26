@@ -2,10 +2,11 @@ package server.response
 
 import org.scalatest.FunSuite
 
-import java.io.{BufferedReader, StringReader}
+import java.io.{BufferedReader, InputStream, StringReader}
 
 import server.request.Request
 import server.routes._
+import server.Helpers
 
 class ResponseSuite extends FunSuite {
 
@@ -33,12 +34,12 @@ class ResponseSuite extends FunSuite {
   }
 
   test("handle: returns response with 404 if resource is not found") {
-    val result = new String(Response.handle(rootDirectory, invalidRequest, routes))
+    val result = Helpers.inputStreamToString(Response.handle(rootDirectory, invalidRequest, routes))
     assert(result contains "HTTP/1.1 400 Not Found")
   }
 
   test("handle: returns response with 200 if resource is found") {
-    val result = new String(Response.handle(rootDirectory, validRequest, routes))
+    val result = Helpers.inputStreamToString(Response.handle(rootDirectory, validRequest, routes))
     assert(result contains "HTTP/1.1 200 OK")
   }
 }
