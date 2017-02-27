@@ -14,6 +14,6 @@ object ImageResponder extends Responder {
 
   def body(image: Path): InputStream = new FileInputStream(image.toString)
 
-  def size(uri: Path): Int = Files.size(uri).toInt
+  def size(image: Path): Int = Files.size(image).toInt
 }
 
