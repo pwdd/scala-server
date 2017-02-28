@@ -12,6 +12,7 @@ class RequestSuite extends FunSuite {
       "Host: localhost" + CRLF  +
       "Accept: text/html" + CRLF  +
       "Keep-Alive: 300" + CRLF  +
+      "If-Modified-Since: Tue, 24 Jan 2012 000909 GMT" + CRLF +
       "ConnectionHandler: keep-alive" + CRLF  + CRLF
 
   val bufferedRequest = new BufferedReader(
@@ -28,6 +29,7 @@ class RequestSuite extends FunSuite {
       "Host" -> "localhost",
       "Accept" -> "text/html",
       "Keep-Alive" -> "300",
+      "If-Modified-Since" -> "Tue, 24 Jan 2012 000909 GMT",
       "ConnectionHandler" -> "keep-alive"
     )
 

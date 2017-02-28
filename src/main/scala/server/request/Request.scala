@@ -14,6 +14,14 @@ case class Request(in: BufferedReader) {
 
   def protocol: String = getValueFor("Protocol").toUpperCase
 
+  def eTag: String = getValueFor("If-None-Match")
+
+  def ifModifiedSince: String = getValueFor("If-Modified-Since")
+
+  def connection: String = getValueFor("Connection")
+
+  def cacheControl: String = getValueFor("Cache-Control")
+
   private def getValueFor(key: String) = {
     val value: Option[String] = requestMap.get(key)
     value match {
@@ -42,11 +50,24 @@ case class Request(in: BufferedReader) {
     val rest = array.slice(1, array.length).filter(_.nonEmpty)
 
     for (line <- rest) {
-      val splitLine = line.split(" ")
+      val splitLine = resolveSplitLine(line)
       finalMap = finalMap + (splitLine(0) -> splitLine(1))
     }
 
     firstLineMap ++ finalMap
+  }
+
+  private def resolveSplitLine(line: String): Array[String] = {
+    val key = "If-Modified-Since"
+    val baseString = "Sun, 01 Jan 1900 000000 GMT"
+
+    if (line.startsWith(key)) {
+      val start = key.length + 1
+      val end = start + baseString.length
+      Array[String](key, line.substring(start, end))
+    } else {
+      line.split(" ")
+    }
   }
 
   private def bufToString(in: BufferedReader): String = {
