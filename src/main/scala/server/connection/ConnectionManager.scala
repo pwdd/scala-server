@@ -15,15 +15,19 @@ case class ConnectionManager(socket: Socket) extends Runnable {
     val buf = new Array[Byte](1024)
     var bytesRead = 0
     val out = new BufferedOutputStream(socket.getOutputStream)
-    while ({bytesRead = response.read(buf); bytesRead != -1}) out.write(buf, 0, bytesRead)
+    while ({bytesRead = response.read(buf); bytesRead != -1}) {
+      out.write(buf, 0, bytesRead)
+      out.flush()
+    }
     response.close()
-    out.flush()
     out.close()
   }
 
   override def run(): Unit = {
     val request = Request(bufferedRequest)
+    println("\n\n" + request.requestMap + "\n\n")
     val response = Response.handle(Settings.rootDirectory, request, Settings.routes)
     sendResponse(response)
   }
 }
+
