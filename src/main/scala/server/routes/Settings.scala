@@ -6,9 +6,7 @@ object Settings extends SetUp {
   val rootDirectory: String = "/public"
 
   val routes: Routes = Routes(
-    GET("/owl.jpg", ImageResponder),
-    // world.jpg image is 113MB, bigger than Github limit
-    GET("/world.jpg", ImageResponder),
+    GET("^/\\w*.+(jpg|jpeg|png)$", ImageResponder),
     GET("/hello", HelloWorldResponder)
   )
 }
