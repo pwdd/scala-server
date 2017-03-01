@@ -9,9 +9,9 @@ import server.routes._
 
 object Response {
   def handle(rootDirectory: String, request: Request, routes: List[Handler]): InputStream = {
-    val uri = request.uri.toLowerCase
-    val handler = getHandler(uri, routes)
-    getResponse(rootDirectory, uri, handler)
+    val path = getFilePath(rootDirectory, request.uri.toLowerCase)
+    val handler = getHandler(request.uri, routes)
+    getResponse(path, handler, request)
   }
 
   def getHandler(uri: String, routes: List[Handler]): Handler = {
@@ -27,8 +27,8 @@ object Response {
     pattern.matcher(requestedURI).find
   }
 
-  private def getResponse(rootDirectory: String, uri: String, handler: Handler): InputStream = {
-    handler.responder.response(getFilePath(rootDirectory, uri))
+  private def getResponse(path: Path, handler: Handler, request: Request): InputStream = {
+    handler.responder.response(path, request)
   }
 
   private def getFilePath(rootDirectory: String, uri: String): Path = {

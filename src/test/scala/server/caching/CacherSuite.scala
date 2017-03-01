@@ -24,4 +24,9 @@ class CacherSuite extends FunSuite {
     val requestedDate = fileDate - 1
     assert(Cacher.hasBeenModifiedSince(file, requestedDate))
   }
+
+  test("dateStringToMillis: parses date from 'If-Modified-Since' from request") {
+    val dateString = "Tue, 24 Jan 2012 000909 GMT"
+    assert(Cacher.dateStringToMillis(dateString).isInstanceOf[Long])
+  }
 }

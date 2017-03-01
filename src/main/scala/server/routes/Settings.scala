@@ -10,3 +10,4 @@ object Settings extends SetUp {
     GET("/hello", HelloWorldResponder)
   )
 }
+
