@@ -25,9 +25,7 @@ case class ConnectionManager(socket: Socket) extends Runnable {
 
   override def run(): Unit = {
     val request = Request(bufferedRequest)
-    println("\n\n" + request.requestMap + "\n\n")
     val response = Response.handle(Settings.rootDirectory, request, Settings.routes)
     sendResponse(response)
   }
 }
-
