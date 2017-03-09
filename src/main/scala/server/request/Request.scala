@@ -22,6 +22,8 @@ case class Request(in: BufferedReader) {
 
   def cacheControl: String = getValueFor("Cache-Control")
 
+  def pragma: String = getValueFor("Pragma")
+
   private def getValueFor(key: String) = {
     val value: Option[String] = requestMap.get(key)
     value match {

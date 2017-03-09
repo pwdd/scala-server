@@ -60,7 +60,7 @@ object ImageResponder extends Responder {
 
   private def shouldBeCached(image: Path, request: Request): Boolean = {
     val requestDate = Cacher.dateStringToMillis(request.ifModifiedSince)
-    !Cacher.hasBeenModifiedSince(image, requestDate)
+    !Cacher.hasBeenModifiedSince(image, requestDate) && request.pragma != "no-cache"
   }
 
   private def getProperHeader(image: Path, request: Request): InputStream = {
